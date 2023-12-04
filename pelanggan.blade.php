@@ -33,7 +33,7 @@
               <td>{{$pelanggan->NomorTelepon}} </td>
             <td>
             <a type="button" class="btn btn-outline-danger" href="hapusPelanggan/{{$pelanggan->PelangganID}}">Delete</a>
-            <a type="button" class="btn btn-outline-info" href="update/{{$pelanggan->PelangganID}}">Update</a>     
+            <a type="button" class="btn btn-outline-info" href="updatePelanggan/{{$pelanggan->PelangganID}}">Update</a>     
             </form>
           </td>
       </tbody>

@@ -16,7 +16,7 @@
 <body>
 @include('layouts.nav') 
      <br>
-     <br>
+     <br><br>
      <br>
      <br>
      <h3 style="text-align:center;">{{$isi}}</h3>

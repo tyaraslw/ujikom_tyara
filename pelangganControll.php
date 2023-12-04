@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\pelanggan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Produk;
@@ -20,28 +21,38 @@ class pelangganControll extends Controller
         return view('pelanggan', ['TextIsi' => $data, 'pelanggan' => $pelanggan]);  
     }
 
+    function hapus($id)
+    {
+        $deleted=DB::table('pelanggan')->where('PelangganID', $id)->delete();
+        if($deleted){
+            return redirect()->back();
+        }
+    }
+
+    function update($id)
+    {
+        $pelanggan = DB::table('pelanggan')->where('pelangganID' , $id)->first();
+        return view('updatepelanggan' , ['pelanggan' => $pelanggan]);
+    }
+
+    function proses_update_pelanggan(Request $request, $id)
+    {
+        $isi_pelanggan = $request->isi_pelanggan;
+
+        return $isi_pelanggan;
+
+        // DB::table('pelanggan')
+        // ->where('pelangganID', $id)
+        // ->update(['isi_pelanggan' => $isi_pelanggan]);
+        
+        // return redirect('/pelanggan');
+    }
+
     function tambahpel()
     {
 
         $isi = "Tambah Pelanggan";
 
-        return view('tambahpelanggan', ['isi' => $isi]);
-    }
-
-    function proses_tambahpel(Request $request)
-    {
-
-        // return Auth::user();
-
-        // $isi_pengaduan = $_POST['isi_laporan'];
-        $isi_pelanggan = $request->isi_laporan;
-
-        // DB::table('produk')->insert([
-        //     'ProdukID' =>Auth::user()->ID,
-        //     'Nama_Produk' => Auth::user()->nik,
-        //     'Harga' => $isi_pelanggan,
-        //     'Stok' => '0'
-        // ]);
-        return redirect('/tambah-pelanggan');
+        return view('/tambahpelanggan', ['isi' => $isi]);
     }
 }

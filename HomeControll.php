@@ -55,7 +55,7 @@ class HomeControll extends Controller
 
     function hapus($id)
     {
-        $deleted=DB::table('pengaduan')->where('id_pengaduan', $id)->delete();
+        $deleted=DB::table('produk')->where('ProdukID', $id)->delete();
         if($deleted){
             return redirect()->back();
         }
