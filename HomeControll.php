@@ -28,28 +28,51 @@ class HomeControll extends Controller
         return view('produk', ['TextIsi' => $data, 'produk' => $produk]);  
     }
 
-    function tampil_produk()
+    //tambahproduk
+    function tambah_produk()
     {
 
         $isi = "Tambah Produk";
 
         return view('tambahproduk', ['isi' => $isi]);
     }
-
     function proses_tambah_produk(Request $request)
     {
-
-        // return Auth::user();
-
-        // $isi_pengaduan = $_POST['isi_laporan'];
-        $isi_produk = $request->isi_laporan;
+        $tambah_produk = $request->isinama;
+        $tambah_harga = $request->isiharga;
+        $tambah_stok = $request->isistok;
+        
+        // return ([$tambah_produk, $tambah_harga, $tambah_stok]);
 
         DB::table('produk')->insert([
-            'ProdukID' =>Auth::user()->ID,
-            'Nama_Produk' => Auth::user()->nik,
-            'Harga' => $isi_produk,
-            'Stok' => '0'
+            'ProdukID' => '0',
+            'NamaProduk' => $tambah_produk,
+            'Harga' => $tambah_harga,
+            'Stok' => $tambah_stok
         ]);
+        return redirect('/produk');
+    }
+
+    //updateproduk
+    function update_produk($id)
+    {
+        $produk = DB::table('produk')->where('ProdukID' , $id)->first();
+
+        // return $produk;
+        return view('updateproduk' , ['produk' => $produk]);
+    }
+    function proses_update_produk(Request $request, $id)
+    {
+        $isinama = $request->isinama;
+        $isiharga = $request->isiharga;
+        $isistok = $request->isistok;
+
+        // return [$isinama, $isiharga, $isistok];
+
+        DB::table('produk')
+        ->where('ProdukID', $id)
+        ->update(['NamaProduk' => $isinama, 'Harga' => $isiharga, 'Stok' => $isistok]);
+        
         return redirect('/produk');
     }
 
@@ -61,20 +84,4 @@ class HomeControll extends Controller
         }
     }
 
-    function detail_pengaduan($id)
-    {
-        $data = DB::table('kasir')
-            ->where('ProdukID', '=', $id)
-            ->first();
-
-        $produk = DB::where('ProdukID', $id)->first();
-        // $tanggapan = Tanggapan::where('id_pengaduan', $id)->get();
-        // $tanggapan = DB::table('tanggapan')
-        //     ->join('petugas', 'petugas.id', '=', 'tanggapan.id_petugas')
-        //     ->where('tanggapan.id_pengaduan', $id)
-        //     ->get();
-        // return $tanggapan;
-        
-        return view("detailP", ["data" => $produk]);
-    }
 }
